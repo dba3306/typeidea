@@ -31,8 +31,9 @@ class PostAdmin(admin.ModelAdmin):
         'title', 'category', 'status',
         'create_time', 'operator'
     ]
-    list_display_links = ['category', ]
-    search_fields = ['titile', 'category__name']
+    list_display_links = []
+    list_filter = ['category', ]
+    search_fields = ['title', 'category__name']
 
     actions_on_top = True
     actions_on_bottom = True
@@ -51,7 +52,7 @@ class PostAdmin(admin.ModelAdmin):
     def operator(self, obj):
         return format_html(
             '<a href="{}">编辑</a>',
-            reverse('admin:blog_tag_change', args=(obj.id,))
+            reverse('admin:blog_post_change', args=(obj.id,))
         )
     operator.short_description = '操作'
 
