@@ -45,6 +45,7 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
             return queryset.filter(category_id=self.value())
         return queryset
 
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = [
@@ -80,3 +81,8 @@ class PostAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
         return super(PostAdmin, self).save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        qs = super(PostAdmin,self).get_queryset(request)
+        return qs.filter(owner = request.user)
+
