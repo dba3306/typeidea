@@ -56,19 +56,48 @@ class PostAdmin(admin.ModelAdmin):
     # list_filter = ['category', ]
     list_filter = [CategoryOwnerFilter]
     search_fields = ['title', 'category__name']
-
+    # 自动赋值当前用户
+    exclude = ('owner',)
     actions_on_top = True
     actions_on_bottom = True
+    # filter_vertical = ('tag', )
+    filter_horizontal = ('tag', )
 
     # 编辑页面
     save_on_top = True
 
-    fields = (
-        ('category', 'title'),
-        'desc',
-        'status',
-        'content',
-        'tag',
+    # fields = (
+    #     ('category', 'title'),
+    #     'desc',
+    #     'status',
+    #     'content',
+    #     'tag',
+    # )
+    fieldsets = (
+        (
+            '基础配置', {
+                'description': '基础配置描述',
+                'fields': (
+                    ('title', 'category'),
+                    'status',
+                ),
+            }
+        ),
+        (
+            '内容', {
+                'description': '文章内容',
+               'fields': (
+                   'desc',
+                   'content',
+               ),
+            }
+        ),
+        (
+            '额外信息', {
+                # 'classes': ('collapse', ),
+                'fields': ('tag', ),
+            }
+        )
     )
 
     def operator(self, obj):
@@ -86,3 +115,8 @@ class PostAdmin(admin.ModelAdmin):
         qs = super(PostAdmin,self).get_queryset(request)
         return qs.filter(owner = request.user)
 
+    # class Media:
+    #     css = {
+    #         'all':('https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css', ),
+    #     }
+    #     js = ('https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.js', )
