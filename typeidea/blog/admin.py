@@ -5,9 +5,15 @@ from django.urls import reverse
 from .adminforms import PostAdminForm
 # Register your models here.
 
+class PostInline(admin.TabularInline):
+    fields = ('title', 'desc')
+    extra = 0
+    model = Post
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    inlines = [PostInline, ]
     list_display = ('name', 'status', 'is_nav', 'create_time','post_count')
     fields = ('name', 'status', 'is_nav')
 
@@ -122,3 +128,7 @@ class PostAdmin(admin.ModelAdmin):
     #         'all':('https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css', ),
     #     }
     #     js = ('https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.js', )
+
+
+
+
