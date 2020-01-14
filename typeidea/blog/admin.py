@@ -3,6 +3,7 @@ from .models import Post, Category, Tag
 from django.utils.html import format_html
 from django.urls import reverse
 from .adminforms import PostAdminForm
+from typeidea.custom_site import CustomSite
 # Register your models here.
 
 class PostInline(admin.TabularInline):
@@ -53,7 +54,7 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
         return queryset
 
 
-@admin.register(Post)
+@admin.register(Post,site=CustomSite)
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
     list_display = [
