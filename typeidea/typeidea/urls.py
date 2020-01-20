@@ -21,7 +21,7 @@ from config.views import links
 urlpatterns = [
     path('super_admin/', admin.site.urls),
     path('admin/', custom_site.urls),
-    re_path('^$',post_list),
+            re_path('^$',post_list),
     re_path('^category/(?P<category_id>\d+)/$', post_list),
     re_path('^tag/(?P<tag_id>\d+)/$', post_list),
     re_path('^links/$', links),
