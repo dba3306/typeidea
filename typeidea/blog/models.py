@@ -23,6 +23,24 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def get_nav(cls):
+        categorys = cls.objects.filter(status=cls.STATUS_NORMAL)
+        nav_categories = []
+        normal_categories = []
+
+        for cate in categorys:
+            if cate.is_nav:
+                nav_categories.append(cate)
+            else:
+                normal_categories.append(cate)
+
+        return {
+            'navs': nav_categories,
+            'categories': normal_categories
+        }
+
+
 
 class Tag(models.Model):
     STATUS_NORMAL = 1
